@@ -1,0 +1,10 @@
+FROM openjdk
+RUN useradd -ms nalini /bin/bash
+RUN mkdir -p /home/nalini/app && chown -R nalini:nalini /home/nalini/app
+COPY *.java .
+COPY junit-* .
+WORKDIR /home/nalini/app
+USER nalini
+RUN javac -cp "junit-4.10.jar:." *.java
+COPY --chown nalini:nalini . .
+CMD ["java", "-cp", "junit-4.10.jar:.", TestAdd, TestSub, Calculator]
